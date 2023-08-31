@@ -20,6 +20,7 @@
     BeatSQL - SQL 自学网站 ©2023 by
     <a href="https://github.com/zhf521" target="_blank">zhf</a>
   </div>
+  <a-back-top :style="{ right: '24px' }"></a-back-top>
 </template>
 <script setup>
 import { computed, ref } from 'vue';
