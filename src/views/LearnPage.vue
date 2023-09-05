@@ -8,7 +8,7 @@
     <!-- 右半部分区域 -->
     <a-col :lg="13" :xs="24">
       <!-- SQL编辑区 -->
-      <!-- todo -->
+      <SQLEditor :level="level" :onSubmit="onSubmit"></SQLEditor>
       <!-- 可折叠区域 -->
       <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
         <a-collapse-panel key="result" header="查看执行结果">
@@ -25,7 +25,9 @@
 </template>
 <script  setup>
 import QuestionBoard from '../components/QuestionBoard.vue';
-import { getCurrentLevelNum, getLevelByKey, allLevels } from '../levels'
+import SQLEditor from '../components/SQLEditor.vue';
+import { getLevelByKey, allLevels } from '../levels';
+import { checkResult } from '../utils/SQLResult';
 import { computed, ref } from 'vue';
 // 结果部分默认展开
 const activeKey = ref(['result']);
@@ -33,11 +35,22 @@ const activeKey = ref(['result']);
 const props = defineProps(['levelKey']);
 const level = computed(() => {
   if (props.levelKey) {
-    return getLevelByKey(props.levelKey)
+    return getLevelByKey(props.levelKey);
   } else {
     return allLevels[0];
   }
-})
+});
+const result = ref();
+const answerResult = ref();
+const errorMessage = ref();
+const resultStatus = ref(-1);
+// 执行结果
+const onSubmit = (sql, res, answerRes, errorMsg) => {
+  result.value = res;
+  answerResult.value = answerRes;
+  errorMessage.value = errorMsg;
+  resultStatus.value = checkResult(res, answerRes);
+};
 
 </script>
 <style></style>
