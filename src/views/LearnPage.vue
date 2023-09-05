@@ -15,11 +15,14 @@
           <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
             :resultStatus="resultStatus"></SQLResult>
         </a-collapse-panel>
-        <a-collapse-panel key="hint" header="查看提示">
+        <a-collapse-panel key="hint" header="查看提示" v-if="level.hint">
+          <p>{{ level.hint }}</p>
         </a-collapse-panel>
         <a-collapse-panel key="ddl" header="查看建表语句">
+          <!-- todo -->
         </a-collapse-panel>
         <a-collapse-panel key="answer" header="查看答案">
+          <pre v-html="highlightCode(format(level.answer))"></pre>
         </a-collapse-panel>
       </a-collapse>
     </a-col>
@@ -31,6 +34,8 @@ import SQLEditor from '../components/SQLEditor.vue';
 import SQLResult from '../components/SQLResult.vue';
 import { getLevelByKey, allLevels } from '../levels';
 import { checkResult } from '../utils/SQLResult';
+import { format } from 'sql-formatter';
+import hlgs from 'highlight.js';
 import { computed, ref, watch } from 'vue';
 // 结果部分默认展开
 const activeKey = ref(['result']);
@@ -64,5 +69,9 @@ const onSubmit = (sql, res, answerRes, errorMsg) => {
   resultStatus.value = checkResult(res, answerRes);
 };
 
+// 高亮代码
+const highlightCode = (code) => {
+  return hlgs.highlightAuto(code).value;
+};
 </script>
 <style></style>
