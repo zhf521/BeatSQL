@@ -12,6 +12,8 @@
       <!-- 可折叠区域 -->
       <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
         <a-collapse-panel key="result" header="查看执行结果">
+          <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
+          :resultStatus="resultStatus"></SQLResult>
         </a-collapse-panel>
         <a-collapse-panel key="hint" header="查看提示">
         </a-collapse-panel>
@@ -26,6 +28,7 @@
 <script  setup>
 import QuestionBoard from '../components/QuestionBoard.vue';
 import SQLEditor from '../components/SQLEditor.vue';
+import SQLResult from '../components/SQLResult.vue';
 import { getLevelByKey, allLevels } from '../levels';
 import { checkResult } from '../utils/SQLResult';
 import { computed, ref } from 'vue';
