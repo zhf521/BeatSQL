@@ -6,10 +6,10 @@
       <a-divider></a-divider>
       <div>
         <a-button v-if="levelNum > 0" style="float: left;" @click="toPrevLevel">上一关</a-button>
-        <a-button v-if="levelNum < mainLevels.length - 1" type="primary" style="float: right;"
-          @click="toNextLevel">下一关</a-button>
-        <a-button v-if="levelNum === mainLevels.length - 1" type="primary" style="float: right;"
-          @click="doWin">恭喜过关</a-button>
+        <a-button v-if="levelNum < mainLevels.length - 1" type="primary" style="float: right;" @click="toNextLevel"
+          :disabled="props.resultStatus !== RESULT_STATUS_ENUM.SUCCEED">下一关</a-button>
+        <a-button v-if="levelNum === mainLevels.length - 1" type="primary" style="float: right; "
+          :disabled="resultStatus !== RESULT_STATUS_ENUM.SUCCEED" @click="doWin">恭喜过关</a-button>
       </div>
     </a-card>
     <a-card v-else>关卡加载失败</a-card>
@@ -21,11 +21,12 @@ import MDViewer from './MDViewer.vue';
 import { getCurrentLevelNum, getNextLevel, getPrevLevel } from '../levels';
 import mainLevels from '../levels/mainLevels';
 import { useRouter } from 'vue-router';
+import { RESULT_STATUS_ENUM } from '../utils/SQLResult';
 // 接收LearnPage传过来的数据
-const props = defineProps(['level']);
+const props = defineProps(['level', 'resultStatus']);
 // 关卡在关卡数组中的索引数
 const levelNum = computed(() => {
-  return getCurrentLevelNum(props.level)
+  return getCurrentLevelNum(props.level);
 });
 // router实例
 const router = useRouter();

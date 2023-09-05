@@ -3,7 +3,7 @@
     <!-- 左半部分区域 -->
     <a-col :lg="11" :xs="24">
       <!-- 问题面板 -->
-      <QuestionBoard :level="level"></QuestionBoard>
+      <QuestionBoard :level="level" :resultStatus="resultStatus"></QuestionBoard>
     </a-col>
     <!-- 右半部分区域 -->
     <a-col :lg="13" :xs="24">
