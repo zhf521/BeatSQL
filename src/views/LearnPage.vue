@@ -13,7 +13,7 @@
       <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
         <a-collapse-panel key="result" header="查看执行结果">
           <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
-          :resultStatus="resultStatus"></SQLResult>
+            :resultStatus="resultStatus"></SQLResult>
         </a-collapse-panel>
         <a-collapse-panel key="hint" header="查看提示">
         </a-collapse-panel>
@@ -31,7 +31,7 @@ import SQLEditor from '../components/SQLEditor.vue';
 import SQLResult from '../components/SQLResult.vue';
 import { getLevelByKey, allLevels } from '../levels';
 import { checkResult } from '../utils/SQLResult';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 // 结果部分默认展开
 const activeKey = ref(['result']);
 // 根据传入的levelKey属性值获取对应的关卡对象，并将其存储在计算属性level中
@@ -47,6 +47,15 @@ const result = ref();
 const answerResult = ref();
 const errorMessage = ref();
 const resultStatus = ref(-1);
+
+// 切换关卡时，重置状态
+watch(level, () => {
+  result.value = null;
+  answerResult.value = null;
+  errorMessage.value = null;
+  resultStatus.value = -1;
+});
+
 // 执行结果
 const onSubmit = (sql, res, answerRes, errorMsg) => {
   result.value = res;
