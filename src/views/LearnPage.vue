@@ -19,7 +19,7 @@
           <p>{{ level.hint }}</p>
         </a-collapse-panel>
         <a-collapse-panel key="ddl" header="查看建表语句">
-          <!-- todo -->
+          <CodeEditor :initValue="level.initSQL" :read-only="true"></CodeEditor>
         </a-collapse-panel>
         <a-collapse-panel key="answer" header="查看答案">
           <pre v-html="highlightCode(format(level.answer))"></pre>
@@ -32,6 +32,7 @@
 import QuestionBoard from '../components/QuestionBoard.vue';
 import SQLEditor from '../components/SQLEditor.vue';
 import SQLResult from '../components/SQLResult.vue';
+import CodeEditor from '../components/CodeEditor.vue';
 import { getLevelByKey, allLevels } from '../levels';
 import { checkResult } from '../utils/SQLResult';
 import { format } from 'sql-formatter';
