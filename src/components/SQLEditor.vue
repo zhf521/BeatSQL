@@ -27,11 +27,10 @@ self.MonacoEnvironment = {
 watchEffect(async () => {
   // 初始化/更新默认SQL
   if (inputEditor.value) {
-    toRaw(inputEditor.value).setValue('-- 请在此处输入 SQL 语句\n' + props.level.defaultSQL);
+    toRaw(inputEditor.value).setValue(props.level.defaultSQL);
   }
   // 初始化/更新DB
   db.value = await initDB(props.level.initSQL);
-
 });
 
 // 格式化SQL
