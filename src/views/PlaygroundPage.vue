@@ -2,7 +2,7 @@
   <h2>请输入任意 SQL 语句，尽情玩耍吧~</h2>
   <a-row :gutter="[16, 16]">
     <a-col :md="12" :xs="24">
-      <SQLEditor :level="allLevels[0]" :onSubmit="onSubmit"></SQLEditor>
+      <SQLEditor :level="allLevels[0]" :editorStyle="{ height: '480px' }" :onSubmit="onSubmit"></SQLEditor>
       <a-card title="执行历史" style="margin-top: 16px;">
         <a-collapse v-if="sqlHistoryList.length > 0">
           <a-collapse-panel v-for="(data, index) in sqlHistoryList" :key="index" :header="data.sql">

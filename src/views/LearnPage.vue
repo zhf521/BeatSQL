@@ -8,7 +8,7 @@
     <!-- 右半部分区域 -->
     <a-col :lg="13" :xs="24">
       <!-- SQL编辑区 -->
-      <SQLEditor :level="level" :onSubmit="onSubmit"></SQLEditor>
+      <SQLEditor :level="level" :editorStyle="{ height: '280px' }" :onSubmit="onSubmit"></SQLEditor>
       <!-- 可折叠区域 -->
       <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
         <a-collapse-panel key="result" header="查看执行结果">

@@ -1,5 +1,5 @@
 <template>
-  <div ref="editorRef" style=" height: 280px;"></div>
+  <div ref="editorRef" :style="props.editorStyle"></div>
   <a-space :size="16" style="margin-top: 16px;">
     <a-button type="primary" style="width: 180px;" @click="doSubmit">运行</a-button>
     <a-button @click="doFormat">格式化</a-button>
@@ -15,7 +15,7 @@ import { onMounted, onUnmounted, ref, toRaw, watchEffect } from 'vue';
 import { message } from 'ant-design-vue';
 const editorRef = ref();
 const inputEditor = ref();
-const props = defineProps(['level', 'onSubmit']);
+const props = defineProps(['level', 'onSubmit','editorStyle']);
 const db = ref();
 
 self.MonacoEnvironment = {
