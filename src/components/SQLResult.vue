@@ -3,7 +3,7 @@
     <a-table v-if="!props.errorMessage" :columns="columns" :data-source="resultData" size="middle"
       :pagination="{ hideOnSinglePage: true, pageSize: 20 }">
     </a-table>
-    <div v-else>❌ 语句错误：{{ errorMessage }}</div>
+    <div v-else>❌ 语句错误：{{ props.errorMessage }}</div>
   </a-card>
 </template>
 <script setup>
