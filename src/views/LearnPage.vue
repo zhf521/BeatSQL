@@ -38,8 +38,8 @@ import { checkResult } from '../utils/SQLResult';
 import { format } from 'sql-formatter';
 import hlgs from 'highlight.js';
 import { computed, ref, watch } from 'vue';
-// 结果部分默认展开
-const activeKey = ref(['result']);
+// 定义展开栏
+const activeKey = ref([]);
 // 根据传入的levelKey属性值获取对应的关卡对象，并将其存储在计算属性level中
 const props = defineProps(['levelKey']);
 const level = computed(() => {
@@ -68,6 +68,9 @@ const onSubmit = (sql, res, answerRes, errorMsg) => {
   answerResult.value = answerRes;
   errorMessage.value = errorMsg;
   resultStatus.value = checkResult(res, answerRes);
+  if (!activeKey.value.includes('result')) {
+    activeKey.value.push('result');
+  }
 };
 
 // 高亮代码
