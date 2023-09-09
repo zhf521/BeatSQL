@@ -3,16 +3,12 @@
     <a-col :md="12" :xs="24">
       <a-card title="主线关卡">
         <a-list item-layout="horizontal" :data-source="mainLevels">
-          <template #renderItem="{ item,index }">
-            <a-list-item>
-              <a-list-item-meta :title="`${index+1}.${item.title}`">
-              </a-list-item-meta>
-              <template #actions>
-                <router-link :to="`/learn/${item.key}`">
-                  <a-button>挑战</a-button>
-                </router-link>
-              </template>
-            </a-list-item>
+          <template #renderItem="{ item, index }">
+            <router-link :to="`/learn/${item.key}`">
+              <a-list-item>
+                <a-list-item-meta :title="`${index + 1}、${item.title}`" />
+              </a-list-item>
+            </router-link>
           </template>
         </a-list>
       </a-card>
@@ -20,18 +16,14 @@
     <a-col :md="12" :xs="24">
       <a-card title="自定义关卡">
         <a-list item-layout="horizontal" :data-source="customLevels">
-            <template #renderItem="{ item, index }">
+          <template #renderItem="{ item, index }">
+            <router-link :to="`/learn/${item.key}`">
               <a-list-item>
-                <a-list-item-meta :title="`${index + 1}.${item.title}`">
-                </a-list-item-meta>
-                <template #actions>
-                  <router-link :to="`/learn/${item.key}`">
-                    <a-button>挑战</a-button>
-                  </router-link>
-                </template>
+                <a-list-item-meta :title="`${index + 1}、${item.title}`" />
               </a-list-item>
-            </template>
-          </a-list>
+            </router-link>
+          </template>
+        </a-list>
       </a-card>
     </a-col>
   </a-row>
