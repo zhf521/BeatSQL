@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
+import IntroductionPage from '../views/IntroductionPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import LearnPage from '../views/LearnPage.vue';
 import LevelsPage from '../views/LevelsPage.vue';
@@ -10,8 +11,13 @@ const router = createRouter({
     routes: [
         {
             path: '/',
+            redirect: '/introduction',
             component: HomePage,
             children: [
+                {
+                    path: '/introduction',
+                    component: IntroductionPage,
+                },
                 {
                     path: '/learn/:levelKey?',
                     component: LearnPage,
