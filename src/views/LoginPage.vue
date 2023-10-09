@@ -45,7 +45,7 @@
             <a-button :disabled="registerDisabled" type="primary" html-type="submit" class="login-form-button">
               注册
             </a-button>
-            <a @click="switchPage">已有账户？去登录！</a>
+            <a @click="switchPage"> 已有账户？去登录！</a>
           </a-form-item>
         </a-form>
       </div>
@@ -75,13 +75,12 @@
             <a-button :disabled="loginDisabled" type="primary" html-type="submit" class="login-form-button">
               登录
             </a-button>
-            <a @click="switchPage">还没有账户？去注册！</a>
+            <a @click="switchPage"> 还没有账户？去注册！</a>
           </a-form-item>
         </a-form>
       </div>
     </div>
   </div>
-  <context-holder />
 </template>
 <script setup>
 import smileImage from '@/assets/smile.jpg';
@@ -89,7 +88,6 @@ import cryImage from '@/assets/cry.jpg';
 import { ref, reactive, computed } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
-const [messageApi, contextHolder] = message.useMessage();
 const router = useRouter();
 // 登录模块
 const loginFormState = reactive({
@@ -100,14 +98,14 @@ const loginOnFinish = values => {
   // console.log('Success:', values);
   // 获取token
   const token = 'thisIsToken';
-  messageApi.info('登录成功');
+  message.info('登录成功');
   sessionStorage.setItem('token', token);
   localStorage.setItem('username', values.username);
-  router.push('/introduction');
+  router.push('/');
 };
 const loginOnFinishFailed = errorInfo => {
   // console.log('Failed:', errorInfo);
-  messageApi.info('数据验证失败！');
+  message.info('数据验证失败！');
 };
 const loginDisabled = computed(() => {
   return !(loginFormState.username && loginFormState.password);
@@ -122,11 +120,11 @@ const registerFormState = reactive({
 });
 const registerOnFinish = values => {
   // console.log('Success:', values);
-  messageApi.info('注册成功！');
+  message.info('注册成功！');
 };
 const registerOnFinishFailed = errorInfo => {
   // console.log('Failed:', errorInfo);
-  messageApi.info('注册失败！');
+  message.info('注册失败！');
 };
 const validatePass = async (_rule, value) => {
   if (value === '') {
