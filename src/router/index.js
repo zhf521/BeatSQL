@@ -12,6 +12,9 @@ const router = createRouter({
         {
             path: '/',
             redirect: '/introduction',
+        },
+        {
+            path: '/',
             component: HomePage,
             children: [
                 {

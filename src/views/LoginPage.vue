@@ -12,45 +12,162 @@
       </div>
       <!-- 注册 -->
       <div class="register-form">
-        <!-- 标题盒子 -->
-        <div class="title-box">
-          <h1>注册</h1>
-        </div>
-        <!-- 输入框盒子 -->
-        <div class="input-box">
-          <input type="text" placeholder="用户名">
-          <input type="password" placeholder="密码">
-          <input type="password" placeholder="确认密码">
-        </div>
-        <div class="btn-box">
-          <button>注册</button>
-          <p @click="switchPage">已有账户？去登录</p>
-        </div>
+        <h1>注册</h1>
+        <!-- 注册表单 -->
+        <a-form :model="registerFormState" ref="registerFormRef" @finish="registerOnFinish"
+          @finishFailed="registerOnFinishFailed" :rules="rules">
+          <!-- 用户名 -->
+          <a-form-item name="username" :rules="[{ required: true, message: '请输入您的用户名!' }]">
+            <a-input v-model:value="registerFormState.username" placeholder="用户名">
+              <template #prefix>
+                <UserOutlined class="site-form-item-icon" />
+              </template>
+            </a-input>
+          </a-form-item>
+          <!-- 密码 -->
+          <a-form-item name="pass">
+            <a-input-password v-model:value="registerFormState.pass" placeholder="密码">
+              <template #prefix>
+                <LockOutlined class="site-form-item-icon" />
+              </template>
+            </a-input-password>
+          </a-form-item>
+          <!-- 确认密码 -->
+          <a-form-item name="checkPass">
+            <a-input-password v-model:value="registerFormState.checkPass" placeholder="确认密码">
+              <template #prefix>
+                <LockOutlined class="site-form-item-icon" />
+              </template>
+            </a-input-password>
+          </a-form-item>
+          <!-- 注册按钮和去登录 -->
+          <a-form-item>
+            <a-button :disabled="registerDisabled" type="primary" html-type="submit" class="login-form-button">
+              注册
+            </a-button>
+            <a @click="switchPage">已有账户？去登录！</a>
+          </a-form-item>
+        </a-form>
       </div>
       <!-- 登录 -->
       <div class="login-form">
-        <!-- 标题盒子 -->
-        <div class="title-box">
-          <h1>登录</h1>
-        </div>
-        <!-- 输入框盒子 -->
-        <div class="input-box">
-          <input type="text" placeholder="用户名">
-          <input type="password" placeholder="密码">
-        </div>
-        <div class="btn-box">
-          <button>登录</button>
-          <p @click="switchPage">没有账户？去注册</p>
-        </div>
+        <h1>登录</h1>
+        <!-- 登录表单 -->
+        <a-form :model="loginFormState" @finish="loginOnFinish" @finishFailed="loginOnFinishFailed">
+          <!-- 用户名 -->
+          <a-form-item name="username" :rules="[{ required: true, message: '请输入您的用户名!' }]">
+            <a-input v-model:value="loginFormState.username" placeholder="用户名">
+              <template #prefix>
+                <UserOutlined class="site-form-item-icon" />
+              </template>
+            </a-input>
+          </a-form-item>
+          <!-- 密码 -->
+          <a-form-item name="password" :rules="[{ required: true, message: '请输入您的密码!' }]">
+            <a-input-password v-model:value="loginFormState.password" placeholder="密码">
+              <template #prefix>
+                <LockOutlined class="site-form-item-icon" />
+              </template>
+            </a-input-password>
+          </a-form-item>
+          <!-- 登录按钮和去注册 -->
+          <a-form-item>
+            <a-button :disabled="loginDisabled" type="primary" html-type="submit" class="login-form-button">
+              登录
+            </a-button>
+            <a @click="switchPage">还没有账户？去注册！</a>
+          </a-form-item>
+        </a-form>
       </div>
     </div>
   </div>
+  <context-holder />
 </template>
 <script setup>
 import smileImage from '@/assets/smile.jpg';
 import cryImage from '@/assets/cry.jpg';
-import { ref } from 'vue';
+import { ref, reactive, computed } from 'vue';
+import { message } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
+const [messageApi, contextHolder] = message.useMessage();
+const router = useRouter();
+// 登录模块
+const loginFormState = reactive({
+  username: '',
+  password: '',
+});
+const loginOnFinish = values => {
+  // console.log('Success:', values);
+  // 获取token
+  const token = 'thisIsToken';
+  messageApi.info('登录成功');
+  sessionStorage.setItem('token', token);
+  localStorage.setItem('username', values.username);
+  router.push('/introduction');
+};
+const loginOnFinishFailed = errorInfo => {
+  // console.log('Failed:', errorInfo);
+  messageApi.info('数据验证失败！');
+};
+const loginDisabled = computed(() => {
+  return !(loginFormState.username && loginFormState.password);
+});
 
+// 注册模块
+const registerFormRef = ref();
+const registerFormState = reactive({
+  username: '',
+  pass: '',
+  checkPass: '',
+});
+const registerOnFinish = values => {
+  // console.log('Success:', values);
+  messageApi.info('注册成功！');
+};
+const registerOnFinishFailed = errorInfo => {
+  // console.log('Failed:', errorInfo);
+  messageApi.info('注册失败！');
+};
+const validatePass = async (_rule, value) => {
+  if (value === '') {
+    return Promise.reject('请输入密码');
+  } else {
+    if (registerFormState.checkPass !== '') {
+      registerFormRef.value.validateFields('checkPass');
+    }
+    return Promise.resolve();
+  }
+};
+const validatePass2 = async (_rule, value) => {
+  if (value === '') {
+    return Promise.reject('请再次输入密码');
+  } else if (value !== registerFormState.pass) {
+    return Promise.reject("两次输入的密码不一致！");
+  } else {
+    return Promise.resolve();
+  }
+};
+const registerDisabled = computed(() => {
+  return !(registerFormState.username && registerFormState.pass && registerFormState.checkPass);
+});
+const rules = {
+  pass: [
+    {
+      required: true,
+      validator: validatePass,
+      trigger: 'change',
+    },
+  ],
+  checkPass: [
+    {
+      required: true,
+      validator: validatePass2,
+      trigger: 'change',
+    },
+  ],
+};
+
+// 切换页面
 const preBox = ref(null);
 const stateImg = ref(null);
 let flag = true;
@@ -137,60 +254,17 @@ const switchPage = () => {
   height: 100%;
 }
 
-.title-box {
-  height: 300px;
-  line-height: 500px;
-}
-
-.title-box h1 {
+.login-form h1 {
   text-align: center;
-  letter-spacing: 5px;
-  text-shadow: 4px 4px 3px rgba(0, 0, 0, .1);
+  margin-top: 200px;
 }
 
-.input-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.register-form h1 {
+  text-align: center;
+  margin-top: 200px;
 }
 
-input {
-  width: 60%;
-  height: 40px;
-  margin-bottom: 20px;
-  text-indent: 10px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-}
-
-.btn-box {
-  display: flex;
-  justify-content: center;
-}
-
-button {
-  width: 100px;
-  height: 30px;
-  margin: 0 7px;
-  border-radius: 4px;
-  border: none;
-  background-color: #69b3f0;
-  color: white;
-}
-
-button:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.btn-box p {
-  height: 30px;
-  line-height: 30px;
-  font-size: 14px;
-}
-
-.btn-box p:hover {
-  cursor: pointer;
-  text-decoration: underline;
+.ant-form {
+  margin: 20px 80px 100px 80px;
 }
 </style>
