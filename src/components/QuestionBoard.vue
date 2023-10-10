@@ -1,6 +1,6 @@
 <template>
   <div id="questionBoard">
-    <a-card v-if="props.level" id="questionCard" title="题目描述" hoverable>
+    <a-card v-if="props.level" id="questionCard" hoverable>
       <!-- md展示区 -->
       <MDViewer :value="props.level.content"></MDViewer>
       <a-divider></a-divider>

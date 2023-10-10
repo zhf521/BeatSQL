@@ -16,11 +16,6 @@
   <div class="content">
     <router-view></router-view>
   </div>
-  <div class="footer">
-    <p>BeatSQL - SQL 自学网站 ©2023 by
-      <a href="https://github.com/zhf521" target="_blank">zhf</a>
-    </p>
-  </div>
   <a-back-top :style="{ right: '24px' }"></a-back-top>
 </template>
 <script setup>
@@ -71,11 +66,6 @@ const clickMenu = ({ item, key, keyPath }) => {
 
 .content {
   background: #f0f0f0;
-}
-
-.footer {
-  padding: 10px;
-  text-align: center;
-  background: #f0f0f0;
+  height: calc(100vh - 64px);
 }
 </style>
