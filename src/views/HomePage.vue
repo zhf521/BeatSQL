@@ -1,4 +1,5 @@
 <template>
+  <div>
   <a-row class="header" type="flex" align="middle">
     <a-col flex="160px" style="margin: 0 auto;">
       <router-link to="/">
@@ -9,14 +10,14 @@
       </router-link>
     </a-col>
     <a-col flex="auto">
-      <a-menu mode="horizontal" :items="items" :style="{ lineHeight: '64px' }" @click="clickMenu"
+      <a-menu mode="horizontal" :items="items" :style="{ lineHeight: '8vh' }" @click="clickMenu"
         :selected-keys="selectedKeys" />
     </a-col>
   </a-row>
   <div class="content">
     <router-view></router-view>
   </div>
-  <a-back-top :style="{ right: '24px' }"></a-back-top>
+  </div>
 </template>
 <script setup>
 import { computed, ref } from 'vue';
@@ -63,9 +64,8 @@ const clickMenu = ({ item, key, keyPath }) => {
   font-size: 20px;
   color: #000;
 }
-
 .content {
-  background: #f0f0f0;
-  height: calc(100vh - 64px);
+  background-color: #f5f5f5;
+  height: 92vh;
 }
 </style>

@@ -6,7 +6,8 @@
 <script setup>
 </script>
 <style scoped>
-.container {
-  height: calc(100vh - 108px);
+.container{
+  height: 100%;
+  background:#f0f0f0;
 }
 </style>

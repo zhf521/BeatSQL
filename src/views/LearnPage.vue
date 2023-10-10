@@ -10,25 +10,11 @@
       <a-col :lg="13" :xs="24">
         <!-- SQL编辑区 -->
         <a-card hoverable>
-          <SQLEditor :level="level" :editorStyle="{ height: '280px' }" :onSubmit="onSubmit"></SQLEditor>
+          <SQLEditor :level="level" :editorStyle="{ height: '30vh' }" :onSubmit="onSubmit"></SQLEditor>
         </a-card>
-        <!-- 可折叠区域 -->
-        <a-card style="margin-top: 18px;" hoverable>
-          <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
-            <a-collapse-panel key="result" header="查看执行结果">
-              <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
-                :resultStatus="resultStatus"></SQLResult>
-            </a-collapse-panel>
-            <a-collapse-panel key="hint" header="查看提示" v-if="level.hint">
-              <p>{{ level.hint }}</p>
-            </a-collapse-panel>
-            <a-collapse-panel key="ddl" header="查看建表语句">
-              <CodeEditor :initValue="level.initSQL" :read-only="true"></CodeEditor>
-            </a-collapse-panel>
-            <a-collapse-panel key="answer" header="查看答案">
-              <pre v-html="highlightCode(format(level.answer))"></pre>
-            </a-collapse-panel>
-          </a-collapse>
+        <!-- 结果区域 -->
+        <a-card style="margin-top:3vh;height: 40vh;" hoverable :tab-list="tabList" :active-tab-key="key" @tabChange="key => onTabChange(key, 'key')">
+          {{ contentList[key] }}
         </a-card>
       </a-col>
     </a-row>
@@ -44,8 +30,7 @@ import { checkResult } from '../utils/SQLResult';
 import { format } from 'sql-formatter';
 import hlgs from 'highlight.js';
 import { computed, ref, watch } from 'vue';
-// 定义展开栏
-const activeKey = ref([]);
+
 // 根据传入的levelKey属性值获取对应的关卡对象，并将其存储在计算属性level中
 const props = defineProps(['levelKey']);
 const level = computed(() => {
@@ -74,14 +59,45 @@ const onSubmit = (sql, res, answerRes, errorMsg) => {
   answerResult.value = answerRes;
   errorMessage.value = errorMsg;
   resultStatus.value = checkResult(res, answerRes);
-  if (!activeKey.value.includes('result')) {
-    activeKey.value.push('result');
-  }
+  
 };
 
 // 高亮代码
 const highlightCode = (code) => {
   return hlgs.highlightAuto(code).value;
+};
+
+// tab列表
+const tabList = [
+  {
+    key: 'result',
+    tab: '执行结果',
+  },
+  {
+    key: 'hint',
+    tab: '提示',
+  },
+  {
+    key: 'ddl',
+    tab: '建表语句',
+  },
+  {
+    key: 'answer',
+    tab: '答案',
+  },
+];
+const contentList = {
+  result: 'content1',
+  hint: 'content2',
+  ddl: 'content3',
+  answer: 'content4',
+};
+const key = ref('result');
+const onTabChange = (value, type) => {
+  console.log(value, type);
+  if (type === 'key') {
+    key.value = value;
+  }
 };
 </script>
 <style scoped>

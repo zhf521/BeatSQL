@@ -62,7 +62,7 @@ watch([levelNum], () => {
 </script>
 <style scoped>
 #questionBoard #questionCard {
-  max-height: calc(80vh);
+  max-height: 85vh;
   min-height: 600px;
   overflow-y: auto;
 }
