@@ -17,8 +17,9 @@
     <router-view></router-view>
   </div>
   <div class="footer">
-    BeatSQL - SQL 自学网站 ©2023 by
-    <a href="https://github.com/zhf521" target="_blank">zhf</a>
+    <p>BeatSQL - SQL 自学网站 ©2023 by
+      <a href="https://github.com/zhf521" target="_blank">zhf</a>
+    </p>
   </div>
   <a-back-top :style="{ right: '24px' }"></a-back-top>
 </template>
@@ -69,12 +70,12 @@ const clickMenu = ({ item, key, keyPath }) => {
 }
 
 .content {
-  background: linear-gradient(to right, rgba(247, 207, 213, 0.5), rgba(191, 227, 241, 0.5));
+  background: #f0f0f0;
 }
 
 .footer {
-  padding: 12px;
+  padding: 10px;
   text-align: center;
-  background: linear-gradient(to right, rgba(247, 207, 213, 0.5), rgba(191, 227, 241, 0.5));
+  background: #f0f0f0;
 }
 </style>

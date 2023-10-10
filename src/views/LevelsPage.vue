@@ -2,7 +2,7 @@
   <div class="container">
     <a-row :gutter="[16, 16]">
       <a-col :md="12" :xs="24">
-        <a-card title="主线关卡">
+        <a-card title="主线关卡" class="card" hoverable>
           <a-list item-layout="horizontal" :data-source="mainLevels">
             <template #renderItem="{ item, index }">
               <router-link :to="`/learn/${item.key}`">
@@ -15,7 +15,7 @@
         </a-card>
       </a-col>
       <a-col :md="12" :xs="24">
-        <a-card title="自定义关卡">
+        <a-card title="自定义关卡" class="card" hoverable>
           <a-list item-layout="horizontal" :data-source="customLevels">
             <template #renderItem="{ item, index }">
               <router-link :to="`/learn/${item.key}`">
@@ -37,5 +37,16 @@ import customLevels from '../levels/customLevels';
 <style scoped>
 .container {
   padding: 24px;
+}
+
+.card {
+  max-height: calc(80vh);
+  overflow-y: auto;
+}
+
+.card::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background-color: transparent;
 }
 </style>

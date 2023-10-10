@@ -1,6 +1,6 @@
 <template>
   <div id="questionBoard">
-    <a-card v-if="props.level" id="questionCard">
+    <a-card v-if="props.level" id="questionCard" title="题目描述" hoverable>
       <!-- md展示区 -->
       <MDViewer :value="props.level.content"></MDViewer>
       <a-divider></a-divider>
@@ -12,7 +12,7 @@
           :disabled="resultStatus !== RESULT_STATUS_ENUM.SUCCEED" @click="doWin">恭喜过关</a-button>
       </div>
     </a-card>
-    <a-card v-else>关卡加载失败</a-card>
+    <a-card v-else hoverable>关卡加载失败</a-card>
   </div>
 </template>
 <script setup>
@@ -62,8 +62,14 @@ watch([levelNum], () => {
 </script>
 <style scoped>
 #questionBoard #questionCard {
-  max-height: calc(100vh - 100px);
+  max-height: calc(80vh);
   min-height: 600px;
   overflow-y: auto;
+}
+
+#questionBoard #questionCard::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background-color: transparent;
 }
 </style>

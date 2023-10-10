@@ -7,6 +7,6 @@
 </script>
 <style scoped>
 .container {
-  height: 100vh;
+  height: calc(100vh - 118px);
 }
 </style>

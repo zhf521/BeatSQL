@@ -1,5 +1,5 @@
 <template>
-  <a-card title="执行结果" :extra="RESULT_STATUS_INFO_MAP[props.resultStatus]" style="max-height: 420px;overflow-y: auto;">
+  <a-card title="执行结果" :extra="RESULT_STATUS_INFO_MAP[props.resultStatus]" style="max-height: 420px;overflow-y: auto;" hoverable>
     <a-table v-if="!props.errorMessage" :columns="columns" :data-source="resultData" size="middle"
       :pagination="{ hideOnSinglePage: true, pageSize: 20 }">
     </a-table>

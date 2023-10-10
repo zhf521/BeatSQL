@@ -9,11 +9,11 @@
       <!-- 右半部分区域 -->
       <a-col :lg="13" :xs="24">
         <!-- SQL编辑区 -->
-        <a-card>
+        <a-card hoverable>
           <SQLEditor :level="level" :editorStyle="{ height: '280px' }" :onSubmit="onSubmit"></SQLEditor>
         </a-card>
         <!-- 可折叠区域 -->
-        <a-card style="margin-top: 10px;">
+        <a-card style="margin-top: 18px;" hoverable>
           <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
             <a-collapse-panel key="result" header="查看执行结果">
               <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
