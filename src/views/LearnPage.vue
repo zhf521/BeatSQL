@@ -1,32 +1,38 @@
 <template>
-  <a-row :gutter="[16, 16]">
-    <!-- 左半部分区域 -->
-    <a-col :lg="11" :xs="24">
-      <!-- 问题面板 -->
-      <QuestionBoard :level="level" :resultStatus="resultStatus"></QuestionBoard>
-    </a-col>
-    <!-- 右半部分区域 -->
-    <a-col :lg="13" :xs="24">
-      <!-- SQL编辑区 -->
-      <SQLEditor :level="level" :editorStyle="{ height: '280px' }" :onSubmit="onSubmit"></SQLEditor>
-      <!-- 可折叠区域 -->
-      <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
-        <a-collapse-panel key="result" header="查看执行结果">
-          <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
-            :resultStatus="resultStatus"></SQLResult>
-        </a-collapse-panel>
-        <a-collapse-panel key="hint" header="查看提示" v-if="level.hint">
-          <p>{{ level.hint }}</p>
-        </a-collapse-panel>
-        <a-collapse-panel key="ddl" header="查看建表语句">
-          <CodeEditor :initValue="level.initSQL" :read-only="true"></CodeEditor>
-        </a-collapse-panel>
-        <a-collapse-panel key="answer" header="查看答案">
-          <pre v-html="highlightCode(format(level.answer))"></pre>
-        </a-collapse-panel>
-      </a-collapse>
-    </a-col>
-  </a-row>
+  <div class="container">
+    <a-row :gutter="[16, 16]">
+      <!-- 左半部分区域 -->
+      <a-col :lg="11" :xs="24">
+        <!-- 问题面板 -->
+        <QuestionBoard :level="level" :resultStatus="resultStatus"></QuestionBoard>
+      </a-col>
+      <!-- 右半部分区域 -->
+      <a-col :lg="13" :xs="24">
+        <!-- SQL编辑区 -->
+        <a-card>
+          <SQLEditor :level="level" :editorStyle="{ height: '280px' }" :onSubmit="onSubmit"></SQLEditor>
+        </a-card>
+        <!-- 可折叠区域 -->
+        <a-card style="margin-top: 10px;">
+          <a-collapse v-model:activeKey="activeKey" style="margin-top: 16px;">
+            <a-collapse-panel key="result" header="查看执行结果">
+              <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
+                :resultStatus="resultStatus"></SQLResult>
+            </a-collapse-panel>
+            <a-collapse-panel key="hint" header="查看提示" v-if="level.hint">
+              <p>{{ level.hint }}</p>
+            </a-collapse-panel>
+            <a-collapse-panel key="ddl" header="查看建表语句">
+              <CodeEditor :initValue="level.initSQL" :read-only="true"></CodeEditor>
+            </a-collapse-panel>
+            <a-collapse-panel key="answer" header="查看答案">
+              <pre v-html="highlightCode(format(level.answer))"></pre>
+            </a-collapse-panel>
+          </a-collapse>
+        </a-card>
+      </a-col>
+    </a-row>
+  </div>
 </template>
 <script  setup>
 import QuestionBoard from '../components/QuestionBoard.vue';
@@ -78,4 +84,8 @@ const highlightCode = (code) => {
   return hlgs.highlightAuto(code).value;
 };
 </script>
-<style></style>
+<style scoped>
+.container {
+  padding: 24px;
+}
+</style>

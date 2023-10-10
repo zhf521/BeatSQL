@@ -15,7 +15,7 @@ import { onMounted, onUnmounted, ref, toRaw, watchEffect } from 'vue';
 import { message } from 'ant-design-vue';
 const editorRef = ref();
 const inputEditor = ref();
-const props = defineProps(['level', 'onSubmit','editorStyle']);
+const props = defineProps(['level', 'onSubmit', 'editorStyle']);
 const db = ref();
 
 self.MonacoEnvironment = {

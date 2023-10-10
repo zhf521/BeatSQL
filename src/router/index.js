@@ -43,4 +43,14 @@ const router = createRouter({
     ],
 });
 
+//全局前置路由守卫
+router.beforeEach((to, from, next) => {
+    const isLogin = sessionStorage.getItem('token');
+    if (!isLogin && to.path !== '/login') {
+        next('/login');
+    } else {
+        next();
+    }
+});
+
 export default router;

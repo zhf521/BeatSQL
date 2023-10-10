@@ -1,6 +1,12 @@
 <template>
-  简介
+  <div class="container">
+
+  </div>
 </template>
 <script setup>
 </script>
-<style scoped></style>
+<style scoped>
+.container {
+  height: 100vh;
+}
+</style>

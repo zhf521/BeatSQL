@@ -69,12 +69,12 @@ const clickMenu = ({ item, key, keyPath }) => {
 }
 
 .content {
-  padding: 24px;
+  background: linear-gradient(to right, rgba(247, 207, 213, 0.5), rgba(191, 227, 241, 0.5));
 }
 
 .footer {
   padding: 12px;
   text-align: center;
-  background: #efefef;
+  background: linear-gradient(to right, rgba(247, 207, 213, 0.5), rgba(191, 227, 241, 0.5));
 }
 </style>
