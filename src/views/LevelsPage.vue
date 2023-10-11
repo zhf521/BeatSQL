@@ -40,7 +40,7 @@ import customLevels from '../levels/customLevels';
 }
 
 .card {
-  max-height: calc(80vh);
+  max-height: 85vh;
   overflow-y: auto;
 }
 
