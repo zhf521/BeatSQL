@@ -13,8 +13,21 @@
           <SQLEditor :level="level" :editorStyle="{ height: '30vh' }" :onSubmit="onSubmit"></SQLEditor>
         </a-card>
         <!-- 结果区域 -->
-        <a-card style="margin-top:3vh;height: 40vh;" hoverable :tab-list="tabList" :active-tab-key="key" @tabChange="key => onTabChange(key, 'key')">
-          {{ contentList[key] }}
+        <a-card style="margin-top:3vh;height: 40vh;" hoverable :tab-list="tabList" :active-tab-key="key"
+          @tabChange="key => onTabChange(key, 'key')">
+          <div v-if="key === 'result'">
+            <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
+              :resultStatus="resultStatus"></SQLResult>
+          </div>
+          <div v-if="key === 'hint'">
+            <p>{{ level.hint }}</p>
+          </div>
+          <div v-if="key === 'ddl'">
+            <CodeEditor :initValue="level.initSQL" :readOnly="true"></CodeEditor>
+          </div>
+          <div v-if="key === 'answer'">
+            <pre v-html="highlightCode(format(level.answer))" style="height: 28vh; overflow-y: auto;"></pre>
+          </div>
         </a-card>
       </a-col>
     </a-row>
@@ -30,6 +43,9 @@ import { checkResult } from '../utils/SQLResult';
 import { format } from 'sql-formatter';
 import hlgs from 'highlight.js';
 import { computed, ref, watch } from 'vue';
+
+// 结果面板中的key
+const key = ref('result');
 
 // 根据传入的levelKey属性值获取对应的关卡对象，并将其存储在计算属性level中
 const props = defineProps(['levelKey']);
@@ -51,6 +67,7 @@ watch(level, () => {
   answerResult.value = null;
   errorMessage.value = null;
   resultStatus.value = -1;
+  key.value = 'result';
 });
 
 // 执行结果
@@ -59,7 +76,7 @@ const onSubmit = (sql, res, answerRes, errorMsg) => {
   answerResult.value = answerRes;
   errorMessage.value = errorMsg;
   resultStatus.value = checkResult(res, answerRes);
-  
+  key.value = 'result';
 };
 
 // 高亮代码
@@ -86,15 +103,8 @@ const tabList = [
     tab: '答案',
   },
 ];
-const contentList = {
-  result: 'content1',
-  hint: 'content2',
-  ddl: 'content3',
-  answer: 'content4',
-};
-const key = ref('result');
 const onTabChange = (value, type) => {
-  console.log(value, type);
+  // console.log(value, type);
   if (type === 'key') {
     key.value = value;
   }

@@ -1,10 +1,11 @@
 <template>
-  <a-card title="执行结果" :extra="RESULT_STATUS_INFO_MAP[props.resultStatus]" style="max-height: 420px;overflow-y: auto;" hoverable>
+  <div style="height: 28vh; overflow-y: auto;">
+    <div>{{ RESULT_STATUS_INFO_MAP[props.resultStatus] }}</div>
     <a-table v-if="!props.errorMessage" :columns="columns" :data-source="resultData" size="middle"
       :pagination="{ hideOnSinglePage: true, pageSize: 20 }">
     </a-table>
     <div v-else>❌ 语句错误：{{ props.errorMessage }}</div>
-  </a-card>
+  </div>
 </template>
 <script setup>
 import { computed } from 'vue';

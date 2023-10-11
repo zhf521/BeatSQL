@@ -1,5 +1,5 @@
 <template>
-  <div ref="editorRef" style="min-height: 400px;"></div>
+  <div ref="editorRef" style="min-height: 28vh;"></div>
 </template>
 <script setup>
 import * as monaco from "monaco-editor";
@@ -27,6 +27,7 @@ onMounted(() => {
       formatOnPaste: true,
       automaticLayout: true,
       fontSize: 15,
+      roundedSelection: true,// 选区是否有圆角
       minimap: {
         enabled: false,
       },
