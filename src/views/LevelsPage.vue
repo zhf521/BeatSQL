@@ -8,17 +8,17 @@
               <router-link :to="`/learn/${item.key}`">
                 <a-list-item>
                   <a-list-item-meta :title="`${index + 1}、${item.title}`" />
-                  <a-list-item-meta>
+                  <a-list-item-meta v-if="saveResultStore.resultArray[index] === 1">
                     <template #avatar>
                       <CheckCircleTwoTone twoToneColor="#52c41a" />
                     </template>
                   </a-list-item-meta>
-                  <a-list-item-meta>
+                  <a-list-item-meta v-else-if="saveResultStore.resultArray[index] === 0">
                     <template #avatar>
                       <CloseCircleTwoTone twoToneColor="#eb2f96" />
                     </template>
                   </a-list-item-meta>
-                  <a-list-item-meta>
+                  <a-list-item-meta v-else>
                     <template #avatar>
                       <MinusCircleTwoTone />
                     </template>
@@ -36,17 +36,17 @@
               <router-link :to="`/learn/${item.key}`">
                 <a-list-item>
                   <a-list-item-meta :title="`${index + 1}、${item.title}`" />
-                  <a-list-item-meta>
+                  <a-list-item-meta v-if="saveResultStore.resultArray[index + 30] === 1">
                     <template #avatar>
                       <CheckCircleTwoTone twoToneColor="#52c41a" />
                     </template>
                   </a-list-item-meta>
-                  <a-list-item-meta>
+                  <a-list-item-meta v-else-if="saveResultStore.resultArray[index + 30] === 0">
                     <template #avatar>
                       <CloseCircleTwoTone twoToneColor="#eb2f96" />
                     </template>
                   </a-list-item-meta>
-                  <a-list-item-meta>
+                  <a-list-item-meta v-else>
                     <template #avatar>
                       <MinusCircleTwoTone />
                     </template>
@@ -64,6 +64,9 @@
 import mainLevels from '../levels/mainLevels';
 import customLevels from '../levels/customLevels';
 import { CheckCircleTwoTone, CloseCircleTwoTone, MinusCircleTwoTone } from '@ant-design/icons-vue';
+import { useSaveResultStore } from '../store/saveResultStore';
+const saveResultStore = useSaveResultStore();
+// console.log(saveResultStore.resultArray);
 </script>
 <style scoped>
 .container {

@@ -38,7 +38,7 @@ import QuestionBoard from '../components/QuestionBoard.vue';
 import SQLEditor from '../components/SQLEditor.vue';
 import SQLResult from '../components/SQLResult.vue';
 import CodeEditor from '../components/CodeEditor.vue';
-import { getLevelByKey, allLevels } from '../levels';
+import { getLevelByKey, allLevels, getCurrentLevelNum } from '../levels';
 import { checkResult } from '../utils/SQLResult';
 import { format } from 'sql-formatter';
 import hlgs from 'highlight.js';
@@ -46,6 +46,7 @@ import { computed, ref, watch, onMounted } from 'vue';
 import { useSaveLevelStore } from '../store/saveLevelStore';
 import { useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
+import { useSaveResultStore } from '../store/saveResultStore';
 
 // 结果面板中的key
 const key = ref('result');
@@ -65,6 +66,7 @@ const errorMessage = ref();
 const resultStatus = ref(-1);
 const router = useRouter();
 const saveLevelStore = useSaveLevelStore();
+const saveResultStore = useSaveResultStore();
 
 // 加载缓存的关卡（实现学习记录）
 const loadSaveLevel = () => {
@@ -122,6 +124,8 @@ const onSubmit = (sql, res, answerRes, errorMsg) => {
   } else {
     message.error('结果错误！');
   }
+  saveResultStore.resultArray[getCurrentLevelNum(level.value)] = resultStatus.value;
+  // console.log(saveResultStore.resultArray[getCurrentLevelNum(level.value)]);
 };
 
 // 高亮代码
