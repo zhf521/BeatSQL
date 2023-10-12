@@ -1,16 +1,13 @@
 import { defineStore } from 'pinia';
-import { allLevels } from '../levels';
 import { ref } from 'vue';
 
-export const useGlobalStore = defineStore(
-    'global',
+export const useSaveLevelStore = defineStore(
+    'saveLevel',
     () => {
         // 学习记录
-        const studyHistoryList = ref([]);
-        const currentLevel = ref({ ...allLevels[0] });
+        const level = ref('');
         return {
-            studyHistoryList,
-            currentLevel,
+            level,
         };
     },
     {

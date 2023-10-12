@@ -8,6 +8,21 @@
               <router-link :to="`/learn/${item.key}`">
                 <a-list-item>
                   <a-list-item-meta :title="`${index + 1}、${item.title}`" />
+                  <a-list-item-meta>
+                    <template #avatar>
+                      <CheckCircleTwoTone twoToneColor="#52c41a" />
+                    </template>
+                  </a-list-item-meta>
+                  <a-list-item-meta>
+                    <template #avatar>
+                      <CloseCircleTwoTone twoToneColor="#eb2f96" />
+                    </template>
+                  </a-list-item-meta>
+                  <a-list-item-meta>
+                    <template #avatar>
+                      <MinusCircleTwoTone />
+                    </template>
+                  </a-list-item-meta>
                 </a-list-item>
               </router-link>
             </template>
@@ -21,6 +36,21 @@
               <router-link :to="`/learn/${item.key}`">
                 <a-list-item>
                   <a-list-item-meta :title="`${index + 1}、${item.title}`" />
+                  <a-list-item-meta>
+                    <template #avatar>
+                      <CheckCircleTwoTone twoToneColor="#52c41a" />
+                    </template>
+                  </a-list-item-meta>
+                  <a-list-item-meta>
+                    <template #avatar>
+                      <CloseCircleTwoTone twoToneColor="#eb2f96" />
+                    </template>
+                  </a-list-item-meta>
+                  <a-list-item-meta>
+                    <template #avatar>
+                      <MinusCircleTwoTone />
+                    </template>
+                  </a-list-item-meta>
                 </a-list-item>
               </router-link>
             </template>
@@ -33,6 +63,7 @@
 <script  setup>
 import mainLevels from '../levels/mainLevels';
 import customLevels from '../levels/customLevels';
+import { CheckCircleTwoTone, CloseCircleTwoTone, MinusCircleTwoTone } from '@ant-design/icons-vue';
 </script>
 <style scoped>
 .container {
