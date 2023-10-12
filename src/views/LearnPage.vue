@@ -43,7 +43,7 @@ import { checkResult } from '../utils/SQLResult';
 import { format } from 'sql-formatter';
 import hlgs from 'highlight.js';
 import { computed, ref, watch, onMounted } from 'vue';
-import { useSaveLevelStore } from '../store/globalStore';
+import { useSaveLevelStore } from '../store/saveLevelStore';
 import { useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
 
