@@ -45,6 +45,8 @@ import hlgs from 'highlight.js';
 import { computed, ref, watch, onMounted } from 'vue';
 import { useSaveLevelStore } from '../store/globalStore';
 import { useRouter } from 'vue-router';
+import { message } from 'ant-design-vue';
+
 // 结果面板中的key
 const key = ref('result');
 
@@ -71,6 +73,7 @@ const loadSaveLevel = () => {
     return;
   }
   router.push(`/learn/${saveLevelKey}`);
+  message.info('已为您跳转到上次学习位置！');
 };
 
 // 页面启动时（挂载时)，加载保存的关卡 
@@ -114,6 +117,11 @@ const onSubmit = (sql, res, answerRes, errorMsg) => {
   errorMessage.value = errorMsg;
   resultStatus.value = checkResult(res, answerRes);
   key.value = 'result';//切换到执行结果
+  if (resultStatus.value === 1) {
+    message.success('结果正确！');
+  } else {
+    message.error('结果错误！');
+  }
 };
 
 // 高亮代码
