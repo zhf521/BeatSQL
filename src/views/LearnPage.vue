@@ -4,17 +4,17 @@
       <!-- 左半部分区域 -->
       <a-col :lg="11" :xs="24">
         <!-- 问题面板 -->
-        <QuestionBoard :level="level" :resultStatus="resultStatus"></QuestionBoard>
+        <QuestionBoard :level="level" :resultStatus="resultStatus" ref="ref1"></QuestionBoard>
       </a-col>
       <!-- 右半部分区域 -->
       <a-col :lg="13" :xs="24">
         <!-- SQL编辑区 -->
-        <a-card hoverable>
+        <a-card hoverable ref="ref2">
           <SQLEditor :level="level" :editorStyle="{ height: '30vh' }" :onSubmit="onSubmit"></SQLEditor>
         </a-card>
         <!-- 结果区域 -->
         <a-card style="margin-top:3vh;height: 40vh;" hoverable :tab-list="tabList" :active-tab-key="key"
-          @tabChange="key => onTabChange(key, 'key')">
+          @tabChange="key => onTabChange(key, 'key')" ref="ref3">
           <div v-if="key === 'result'">
             <SQLResult :result="result" :answerResult="answerResult" :errorMessage="errorMessage"
               :resultStatus="resultStatus"></SQLResult>
@@ -31,6 +31,14 @@
         </a-card>
       </a-col>
     </a-row>
+    <a-tour v-model:current="current" :open="open" :steps="steps" @close="handleOpen(false)" @finish="tourFinish" />
+    <a-float-button tooltip="帮助" :style="{
+      right: '24px',
+    }" @click="handleOpen">
+      <template #icon>
+        <QuestionCircleOutlined />
+      </template>
+    </a-float-button>
   </div>
 </template>
 <script  setup>
@@ -46,8 +54,39 @@ import { computed, ref, watch, onMounted } from 'vue';
 import { useSaveLevelStore } from '../store/saveLevelStore';
 import { useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
+import { QuestionCircleOutlined } from '@ant-design/icons-vue';
 import { useSaveResultStore } from '../store/saveResultStore';
 
+// 漫游式引导
+const open = ref(false);
+const ref1 = ref(null);
+const ref2 = ref(null);
+const ref3 = ref(null);
+const current = ref(0);
+const steps = [
+  {
+    title: '教程及问题区',
+    description: '仔细阅读教程及问题',
+    placement: 'right',
+    target: () => ref1.value && ref1.value.$el,
+  },
+  {
+    title: '作答区',
+    description: '在此处书写SQL语句并执行相关操作',
+    target: () => ref2.value && ref2.value.$el,
+  },
+  {
+    title: '答题助手区',
+    description: '在此处查看运行结果、提示、建表语句及答案',
+    target: () => ref3.value && ref3.value.$el,
+  },
+];
+const handleOpen = val => {
+  open.value = val;
+};
+const tourFinish = () => {
+  current.value = 0;
+};
 // 结果面板中的key
 const key = ref('result');
 
@@ -80,6 +119,11 @@ const loadSaveLevel = () => {
 
 // 页面启动时（挂载时)，加载保存的关卡 
 onMounted(() => {
+  let hasExecutedTour = localStorage.getItem('hasExecutedTour');
+  if (!hasExecutedTour) {
+    handleOpen(true);
+    localStorage.setItem('hasExecutedTour', true);
+  }
   if (props.levelKey) {
     // 有levelKey说明url本身具有，用户可能是从关卡页面跳转过来的，不用跳转，保存起来即可
     // 页面刚刚挂载时不会触发watch里的事件，只能在这里解决
